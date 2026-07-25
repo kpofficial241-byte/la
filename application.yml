@@ -34,12 +34,47 @@ plugins:
     allowSearch: true
     allowDirectVideoIds: true
     allowDirectPlaylistIds: true
+
+    # OAuth bypass — fixes "Sign in to confirm you're not a bot" errors.
+    # First run: start Lavalink, copy the printed Google OAuth URL into a browser,
+    # sign in with any Google account, then paste the redirect URL back into the console.
+    # After that, Lavalink saves the token automatically and this stays enabled.
+    oauth:
+      enabled: true
+
+    # Client order matters — most reliable first
     clients:
+      - ANDROID
+      - IOS
+      - MUSIC
       - WEB
       - WEB_REMIX
-      - WEB_EMBEDDED_PLAYER
-      - TVHTML5_SIMPLY
-      - ANDROID_MUSIC
+
+    ANDROID:
+      playback: true
+      videoLoading: true
+      searching: true
+      playlistLoading: true
+    IOS:
+      playback: true
+      videoLoading: true
+      searching: true
+      playlistLoading: false
+    MUSIC:
+      playback: false
+      videoLoading: false
+      searching: true
+      playlistLoading: false
+    WEB:
+      playback: true
+      videoLoading: true
+      searching: true
+      playlistLoading: false
+    WEB_REMIX:
+      playback: true
+      videoLoading: false
+      searching: true
+      playlistLoading: false
 
 metrics:
   prometheus:
