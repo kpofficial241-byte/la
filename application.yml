@@ -2,8 +2,13 @@ server:
   port: ${PORT:2333}
 
 lavalink:
+  plugins:
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.13.0"
+      repository: "https://maven.lavalink.dev/releases"
+
   server:
-    password: yourpassword
+    password: heavencloud.in
+
     sources:
       youtube: true
       soundcloud: true
@@ -16,3 +21,8 @@ lavalink:
 plugins:
   youtube:
     enabled: true
+    allowSearch: true
+    allowDirectVideoIds: true
+    clients:
+      - MUSIC
+      - WEB
