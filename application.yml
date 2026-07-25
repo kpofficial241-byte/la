@@ -5,7 +5,7 @@ lavalink:
   server:
     password: yourpassword
     sources:
-      youtube: false
+      youtube: true
       soundcloud: true
       bandcamp: true
       twitch: true
