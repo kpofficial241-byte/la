@@ -35,31 +35,23 @@ plugins:
     allowDirectVideoIds: true
     allowDirectPlaylistIds: true
 
-    # OAuth bypass — fixes "Sign in to confirm you're not a bot" errors.
-    # First run: start Lavalink, copy the printed Google OAuth URL into a browser,
-    # sign in with any Google account, then paste the redirect URL back into the console.
-    # After that, Lavalink saves the token automatically and this stays enabled.
+    # OAuth bypass — fixes "Sign in to confirm you're not a bot"
+    # Use a BURNER Google account, not your main account!
     oauth:
       enabled: true
 
-    # Client order matters — most reliable first
+    # ANDROID is broken (no fix), WEB_REMIX unresolvable — removed both
     clients:
-      - ANDROID
       - IOS
       - MUSIC
       - WEB
-      - WEB_REMIX
+      - TVHTML5_SIMPLY
 
-    ANDROID:
-      playback: true
-      videoLoading: true
-      searching: true
-      playlistLoading: true
     IOS:
       playback: true
       videoLoading: true
       searching: true
-      playlistLoading: false
+      playlistLoading: true
     MUSIC:
       playback: false
       videoLoading: false
@@ -69,10 +61,10 @@ plugins:
       playback: true
       videoLoading: true
       searching: true
-      playlistLoading: false
-    WEB_REMIX:
+      playlistLoading: true
+    TVHTML5_SIMPLY:
       playback: true
-      videoLoading: false
+      videoLoading: true
       searching: true
       playlistLoading: false
 
