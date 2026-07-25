@@ -4,8 +4,16 @@ server:
 lavalink:
   server:
     password: heavencloud.in
+    sources:
+      youtube: false
 
-logging:
-  level:
-    root: INFO
-    lavalink: INFO
+  plugins:
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
+      snapshot: false
+
+plugins:
+  youtube:
+    enabled: true
+    allowSearch: true
+    allowDirectVideoIds: true
+    allowDirectPlaylistIds: true
