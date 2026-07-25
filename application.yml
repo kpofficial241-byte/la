@@ -1,72 +1,71 @@
-server:
-  port: ${PORT:2333}
+server: # REST and WS server setup
+  port: 2333
   address: 0.0.0.0
 
 lavalink:
-  server:
-    password: "heavencloud.in"
-    bufferDurationMs: 225
-    frameBufferDurationMs: 5000
-    youtubePlaylistLoadLimit: 3
-    opusEncodingQuality: 5
-    resamplingQuality: MEDIUM
-    trackStuckThresholdMs: 5000
-    playerUpdateInterval: 3
-    useSeekGhosting: true
-    gc-warnings: true
+  plugins:
+    # YouTube plugin (Mandatory for Lavalink v4 streaming)
+    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
+    # LavaSrc plugin for Spotify, Apple Music, Deezer
+    - dependency: "com.github.topi314.lavasrc:lavasrc-plugin:4.8.0"
 
+  server:
+    password: "youshallnotpass" # Change this to a secure password
+    
+    # Enable/Disable default audio sources
     sources:
-      youtube: false       # Disabled — handled by youtube-plugin below
-      soundcloud: true
+      youtube: false      # Set to false because we use the youtube-plugin above
       bandcamp: true
+      soundcloud: true
       twitch: true
       vimeo: true
       http: true
       local: false
 
-  plugins:
-    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
-      snapshot: false
+    # Audio playback and buffering tuning
+    bufferDurationMs: 400
+    frameBufferDurationMs: 5000
+    opusEncodingQuality: 10
+    resamplingQuality: "LOW"
+    trackStuckThresholdMs: 10000
+    useSeekGhosting: true
+    playerUpdateInterval: 5
+    recordingTimeoutSeconds: 0
 
+    # Optional IP Rotation if YouTube rate-limits your IP
+    # ipRotation:
+    #   ipBlocks: ["1.2.3.4/32"]
+    #   strategy: "RotateOnBan"
+
+# Plugin configurations
 plugins:
+  # Official YouTube Plugin Settings
   youtube:
-    enabled: true
     allowSearch: true
     allowDirectVideoIds: true
     allowDirectPlaylistIds: true
-
-    # OAuth bypass — fixes "Sign in to confirm you're not a bot"
-    # Use a BURNER Google account, not your main account!
-    oauth:
-      enabled: true
-
-    # ANDROID is broken (no fix), WEB_REMIX unresolvable — removed both
+    # Clients used for fallback if one fails (WEB, MUSIC, TVHTML5, MOBILE, ANDROID_VR)
     clients:
-      - IOS
       - MUSIC
       - WEB
-      - TVHTML5_SIMPLY
+      - TVHTML5
 
-    IOS:
-      playback: true
-      videoLoading: true
-      searching: true
-      playlistLoading: true
-    MUSIC:
-      playback: false
-      videoLoading: false
-      searching: true
-      playlistLoading: false
-    WEB:
-      playback: true
-      videoLoading: true
-      searching: true
-      playlistLoading: true
-    TVHTML5_SIMPLY:
-      playback: true
-      videoLoading: true
-      searching: true
-      playlistLoading: false
+  # LavaSrc Plugin Settings (Spotify / Apple Music / Deezer)
+  lavasrc:
+    providers:
+      - "ytsearch:\"%ISRC%\"" # Resolves exact matches via song's ISRC code
+      - "ytmsearch:%QUERY%"  # Falls back to YouTube Music search
+      - "ytsearch:%QUERY%"   # Falls back to standard YouTube search
+    sources:
+      spotify: true
+      applemusic: false
+      deezer: false
+    spotify:
+      clientId: "YOUR_SPOTIFY_CLIENT_ID"       # Insert from developer.spotify.com
+      clientSecret: "YOUR_SPOTIFY_CLIENT_SECRET" # Insert from developer.spotify.com
+      countryCode: "US"
+      playlistLoadLimit: 6                     # Pages to load (100 tracks per page)
+      albumLoadLimit: 6                        # Pages to load (50 tracks per page)
 
 metrics:
   prometheus:
@@ -75,16 +74,15 @@ metrics:
 
 sentry:
   dsn: ""
-  environment: ""
 
 logging:
   file:
-    max-history: 5
-    max-size: 10MB
-  path: ./logs/
+    path: ./logs/lavalink.log
+
   level:
     root: INFO
     lavalink: INFO
+
   request:
     enabled: true
     includeClientInfo: true
@@ -92,7 +90,3 @@ logging:
     includeQueryString: true
     includePayload: false
     maxPayloadLength: 10000
-  logback:
-    rollingpolicy:
-      max-file-size: 10MB
-      max-history: 5
