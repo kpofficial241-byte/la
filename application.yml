@@ -1,0 +1,18 @@
+server:
+  port: ${PORT:2333}
+
+lavalink:
+  server:
+    password: yourpassword
+    sources:
+      youtube: false
+      soundcloud: true
+      bandcamp: true
+      twitch: true
+      vimeo: true
+      http: true
+      local: false
+
+plugins:
+  youtube:
+    enabled: true
