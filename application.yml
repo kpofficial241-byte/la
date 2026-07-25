@@ -26,8 +26,6 @@ plugins:
     allowDirectPlaylistIds: true
 
     clients:
-      - MUSIC
+      - WEB_REMIX
       - WEB
-      - WEBEMBEDDED
-      - ANDROID
-      - TVHTML5EMBEDDED
+      - WEB_EMBEDDED_PLAYER
