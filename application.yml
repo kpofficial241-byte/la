@@ -14,10 +14,6 @@ lavalink:
       http: true
       local: false
 
-  plugins:
-    - dependency: "dev.lavalink.youtube:youtube-plugin:1.18.1"
-      snapshot: false
-
 plugins:
   youtube:
     enabled: true
@@ -26,6 +22,6 @@ plugins:
     allowDirectPlaylistIds: true
 
     clients:
-      - WEB_REMIX
       - WEB
+      - WEB_REMIX
       - WEB_EMBEDDED_PLAYER
